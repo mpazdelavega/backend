@@ -9,9 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.backend.web.exception.ResourceNotFoundException;
 import com.example.backend.web.model.Product;
-import com.example.backend.web.model.Product_type;
 import com.example.backend.web.repository.ProductRepository;
-import com.example.backend.web.repository.Product_typeRepository;
 
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,14 +18,10 @@ public class ProductServiceImpl implements ProductService {
 
     private ProductRepository repository;
 
-    private Product_typeRepository PTrepository;
 
-    public ProductServiceImpl(ProductRepository repository, Product_typeRepository PTrepository) {
+    public ProductServiceImpl(ProductRepository repository) {
         this.repository = repository;
-        this.PTrepository = PTrepository;
     }
-
-
 
     @Override
     @Transactional(readOnly = true)
@@ -39,6 +33,11 @@ public class ProductServiceImpl implements ProductService {
     @Transactional(readOnly = true)
     public Page<Product> findAll(Pageable pageable) {
         return this.repository.findAll(pageable);
+    }
+
+    @Override
+    public Page<Product> findByCategory(String category, Pageable pageable) {
+        return repository.findByCategory(category, pageable);
     }
 
     @Override

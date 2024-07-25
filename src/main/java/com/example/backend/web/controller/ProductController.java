@@ -8,7 +8,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-//import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.backend.web.model.Product;
-import com.example.backend.web.model.Product_type;
-import com.example.backend.web.repository.ProductRepository;
 import com.example.backend.web.service.ProductService;
 
 @CrossOrigin(origins={"http://localhost:4200"})
@@ -38,6 +35,16 @@ public class ProductController {
     public Page<Product> listPageable(@PathVariable Integer page) {
         Pageable pageable = PageRequest.of(page, 8);
         return service.findAll(pageable);
+    }
+
+    @GetMapping("/filter2")
+    public Page<Product> listPageable(@RequestParam(required = false) String category, @RequestParam(defaultValue = "0") Integer page) {
+        Pageable pageable = PageRequest.of(page, 8);
+        if (category != null && !category.isEmpty()) {
+            return service.findByCategory(category, pageable);
+        } else {
+            return service.findAll(pageable);
+        }
     }
 
     @GetMapping("/{id}")

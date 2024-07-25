@@ -7,7 +7,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.example.backend.web.model.Product;
-import com.example.backend.web.model.Product_type;
 
 import io.micrometer.common.lang.NonNull;
 
@@ -16,6 +15,8 @@ public interface ProductService {
     List<Product> findAll();
 
     Page<Product> findAll(Pageable pageable);
+
+    public Page<Product> findByCategory(String category, Pageable pageable);
 
     Optional<Product> findById(@NonNull Integer id);
 
