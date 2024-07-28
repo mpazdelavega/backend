@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import com.example.backend.web.model.Cart;
 import com.example.backend.web.model.Product;
+import com.example.backend.web.model.ProductSize;
 
 import io.micrometer.common.lang.NonNull;
 
@@ -16,12 +17,14 @@ public interface CartService {
 
     void deleteById(Integer id);
 
-    void addToCart(Integer productId);
+    void addToCart(Integer productId, String size);
     
     void clearCart();
 
     Optional<Cart> findByProduct(Product product);
 
     void save(Cart cart);
+
+    Optional<Cart> findByProductSize(ProductSize productSize);
 
 }

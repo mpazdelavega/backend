@@ -24,15 +24,16 @@ public class Cart {
 
     @NonNull
     private Integer quantity = 0;
-    
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    @JoinColumn(name = "id", nullable = false, updatable = false)
-    private Product product;
 
-    public Cart(Integer id_cart, Integer quantity, Product product) {
+    @NonNull
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @JoinColumn(name = "product_size_id", nullable = false, updatable = false)
+    private ProductSize productSize;
+
+    public Cart(Integer id_cart, Integer quantity, ProductSize productSize) {
         this.id_cart = id_cart;
         this.quantity = quantity;
-        this.product = product;
+        this.productSize = productSize;
     }
 
     public Cart() {

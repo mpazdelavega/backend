@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.example.backend.web.model.Product;
+import com.example.backend.web.model.ProductSize;
 
 import io.micrometer.common.lang.NonNull;
 
@@ -25,5 +26,7 @@ public interface ProductService {
     public List<Product> getProductsByName(String name);
 
     List<Product> getProductsByCategory(String category);
+
+    Optional<ProductSize> findProductSizeByProductAndSize(Product product, String size);
 
 }
