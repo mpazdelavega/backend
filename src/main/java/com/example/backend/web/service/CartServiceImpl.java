@@ -24,7 +24,6 @@ public class CartServiceImpl implements CartService {
     private final ProductRepository productRepository;
     private final ProductSizeRepository productSizeRepository;
 
-    @Autowired
     public CartServiceImpl(CartRepository cartRepository, ProductRepository productRepository, ProductSizeRepository productSizeRepository) {
         this.cartRepository = cartRepository;
         this.productRepository = productRepository;
