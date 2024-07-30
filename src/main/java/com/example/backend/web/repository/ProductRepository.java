@@ -12,10 +12,13 @@ import com.example.backend.web.model.Product;
 
 public interface ProductRepository extends CrudRepository<Product, Integer>{
 
+    @Query("SELECT p FROM Product p WHERE EXISTS (SELECT ps FROM ProductSize ps WHERE ps.product = p AND ps.stock > 0)")
     Page<Product> findAll(Pageable pageable);
     List<Product> findByName(String name);
     List<Product> findByProductTypeCategory(String category);
-    @Query("SELECT p FROM Product p WHERE p.productType.category = :category")
+    @Query("SELECT p FROM Product p WHERE p.productType.category = :category AND EXISTS (SELECT ps FROM ProductSize ps WHERE ps.product = p AND ps.stock > 0)")
     Page<Product> findByCategory(@Param("category") String category, Pageable pageable);
+    @Query("SELECT p FROM Product p WHERE EXISTS (SELECT ps FROM ProductSize ps WHERE ps.product = p AND ps.stock > 0)")
+    List<Product> findAllWithStock();
     
 }

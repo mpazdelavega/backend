@@ -84,4 +84,8 @@ public class ProductServiceImpl implements ProductService {
         }
     }
 
+    public List<Product> findProductsWithStock() {
+        return repository.findAllWithStock();
+    }
+
 }

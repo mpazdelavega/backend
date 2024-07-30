@@ -29,4 +29,6 @@ public interface ProductService {
 
     Optional<ProductSize> findProductSizeByProductAndSize(Product product, String size);
 
+    public List<Product> findProductsWithStock();
+
 }

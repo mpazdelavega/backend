@@ -65,4 +65,10 @@ public class ProductController {
     public List<Product> getProductsByCategory(@RequestParam String category) {
         return service.getProductsByCategory(category);
     }
+
+    @GetMapping("/with-stock")
+    public List<Product> getProductsWithStock() {
+        return service.findProductsWithStock();
+    }
+
 }
