@@ -1,5 +1,7 @@
 package com.example.backend.web.model;
 
+import java.time.LocalDate;
+
 import io.micrometer.common.lang.NonNull;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -36,22 +38,52 @@ public class Product {
     @NonNull
     private String photo;
 
+    @NonNull
+    private LocalDate dateAdded;
+
+    @NonNull
+    private int rating;
+
+    @NonNull
+    private String color;
+
+    @NonNull
+    private String status;
+
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "id_product_type", nullable = false, updatable = false)
     private Product_type productType;
 
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @JoinColumn(name = "gender_id", nullable = false, updatable = false)
+    private Gender gender;
+
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @JoinColumn(name = "brand_id", nullable = false, updatable = false)
+    private Brand brand;
+
     public Product() {
     }
 
-    public Product(Integer id, String name, int quantity, int discount, String photo, String description, Product_type productType) {
+    public Product(Integer id, String name, String description, int price, int discount, String photo,
+            LocalDate dateAdded, int rating, String color, String status, Product_type productType, Gender gender,
+            Brand brand) {
         this.id = id;
         this.name = name;
+        this.description = description;
+        this.price = price;
         this.discount = discount;
         this.photo = photo;
-        this.price = quantity;
-        this.description = description;
+        this.dateAdded = dateAdded;
+        this.rating = rating;
+        this.color = color;
+        this.status = status;
         this.productType = productType;
+        this.gender = gender;
+        this.brand = brand;
     }
+
+    
 
     
 }

@@ -1,5 +1,6 @@
 package com.example.backend.web.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,16 +38,6 @@ public class ProductController {
         return service.findAll(pageable);
     }
 
-    @GetMapping("/filter2")
-    public Page<Product> listPageable(@RequestParam(required = false) String category, @RequestParam(defaultValue = "0") Integer page) {
-        Pageable pageable = PageRequest.of(page, 8);
-        if (category != null && !category.isEmpty()) {
-            return service.findByCategory(category, pageable);
-        } else {
-            return service.findAll(pageable);
-        }
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable Integer id) {
         Product product = service.getProductById(id);
@@ -69,6 +60,35 @@ public class ProductController {
     @GetMapping("/with-stock")
     public List<Product> getProductsWithStock() {
         return service.findProductsWithStock();
+    }
+
+    @GetMapping("/filter2")
+    public Page<Product> listPageable(@RequestParam(required = false) String category, @RequestParam(defaultValue = "0") Integer page) {
+        Pageable pageable = PageRequest.of(page, 8);
+        if (category != null && !category.isEmpty()) {
+            return service.findByCategory(category, pageable);
+        } else {
+            return service.findAll(pageable);
+        }
+    }
+
+    @GetMapping("/by-category-gender")
+    public Page<Product> getProductsByCategoryAndGenderWithStock(@RequestParam("category") String category, @RequestParam("gender") String gender, @RequestParam(defaultValue = "0") Integer page) {
+        Pageable pageable = PageRequest.of(page, 8);
+        return service.findProductsByCategoryAndGenderWithStock(category, gender, pageable);
+    }
+
+    @GetMapping("/by-brand")
+    public Page<Product> getProductsByBrandWithStock(@RequestParam("brand") String brand, @RequestParam(defaultValue = "0") Integer page) {
+        Pageable pageable = PageRequest.of(page, 8);
+        return service.findProductsByBrandWithStock(brand, pageable);
+    }
+
+    @GetMapping("/by-date")
+    public Page<Product> getProductsByDateAddedWithStock(@RequestParam("date") String date, @RequestParam(defaultValue = "0") Integer page) {
+        LocalDate localDate = LocalDate.parse(date);
+        Pageable pageable = PageRequest.of(page, 8);
+        return service.findProductsByDateAddedWithStock(localDate, pageable);
     }
 
 }

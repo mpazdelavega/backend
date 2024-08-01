@@ -1,5 +1,6 @@
 package com.example.backend.web.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,5 +31,11 @@ public interface ProductService {
     Optional<ProductSize> findProductSizeByProductAndSize(Product product, String size);
 
     public List<Product> findProductsWithStock();
+
+    public Page<Product> findProductsByCategoryAndGenderWithStock(String category, String gender, Pageable pageable);
+
+    public Page<Product> findProductsByBrandWithStock(String brand, Pageable pageable);
+
+    public Page<Product> findProductsByDateAddedWithStock(LocalDate date, Pageable pageable);
 
 }

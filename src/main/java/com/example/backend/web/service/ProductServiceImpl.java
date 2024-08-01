@@ -1,5 +1,6 @@
 package com.example.backend.web.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class ProductServiceImpl implements ProductService {
 
+    @Autowired
     private ProductRepository repository;
 
     @Autowired
@@ -46,11 +48,6 @@ public class ProductServiceImpl implements ProductService {
     @Transactional(readOnly = true)
     public Page<Product> findAll(Pageable pageable) {
         return this.repository.findAll(pageable);
-    }
-
-    @Override
-    public Page<Product> findByCategory(String category, Pageable pageable) {
-        return repository.findByCategory(category, pageable);
     }
 
     @Override
@@ -87,5 +84,26 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> findProductsWithStock() {
         return repository.findAllWithStock();
     }
+
+    @Override
+    public Page<Product> findByCategory(String category, Pageable pageable) {
+        return repository.findByCategory(category, pageable);
+    }
+
+    @Override
+	public Page<Product> findProductsByCategoryAndGenderWithStock(String category, String gender, Pageable pageable) {
+        return (Page<Product>) repository.findProductsByCategoryAndGenderWithStock(category, gender, pageable);
+    }
+
+	@Override
+	public Page<Product> findProductsByBrandWithStock(String brand, Pageable pageable) {
+		return (Page<Product>) repository.findProductsByBrandWithStock(brand, pageable);
+	}
+
+	@Override
+	public Page<Product> findProductsByDateAddedWithStock(LocalDate date, Pageable pageable) {
+		return (Page<Product>) repository.findProductsByDateAddedWithStock(date, pageable);
+	}
+
 
 }
