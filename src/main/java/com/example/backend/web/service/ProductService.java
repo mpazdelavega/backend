@@ -38,4 +38,6 @@ public interface ProductService {
 
     public Page<Product> findProductsByDateAddedWithStock(LocalDate date, Pageable pageable);
 
+    public Page<Product> findProductsByGendersAndBrandsWithStock(String gender, String brand, Pageable pageable);
+
 }

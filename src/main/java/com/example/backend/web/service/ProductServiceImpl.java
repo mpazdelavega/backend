@@ -105,5 +105,10 @@ public class ProductServiceImpl implements ProductService {
 		return (Page<Product>) repository.findProductsByDateAddedWithStock(date, pageable);
 	}
 
+    @Override
+    public Page<Product> findProductsByGendersAndBrandsWithStock(String gender, String brand, Pageable pageable) {
+        return (Page<Product>) repository.findProductsByGendersAndBrandsWithStock(gender, brand, pageable);
+    }
+
 
 }

@@ -32,11 +32,11 @@ public class ProductController {
     //     return service.findAll();
     // }
 
-    @GetMapping("/page/{page}")
-    public Page<Product> listPageable(@PathVariable Integer page) {
-        Pageable pageable = PageRequest.of(page, 8);
-        return service.findAll(pageable);
-    }
+    // @GetMapping("/page/{page}")
+    // public Page<Product> listPageable(@PathVariable Integer page) {
+    //     Pageable pageable = PageRequest.of(page, 8);
+    //     return service.findAll(pageable);
+    // }
 
     @GetMapping("/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable Integer id) {
@@ -89,6 +89,20 @@ public class ProductController {
         LocalDate localDate = LocalDate.parse(date);
         Pageable pageable = PageRequest.of(page, 8);
         return service.findProductsByDateAddedWithStock(localDate, pageable);
+    }
+
+    @GetMapping("/filter-products")
+    public Page<Product> getProductsFiltered(@RequestParam(required = false) String gender,
+                                             @RequestParam(required = false) String brand,
+                                             @RequestParam(defaultValue = "0") Integer page) {
+        Pageable pageable = PageRequest.of(page, 8);
+        return service.findProductsByGendersAndBrandsWithStock(gender, brand, pageable);
+    }
+
+    @GetMapping("/page")
+    public Page<Product> listPageable(@RequestParam(defaultValue = "0") Integer page) {
+        Pageable pageable = PageRequest.of(page, 8);
+        return service.findAll(pageable);
     }
 
 }

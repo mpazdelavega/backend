@@ -35,4 +35,7 @@ public interface ProductRepository extends CrudRepository<Product, Integer>{
     @Query("SELECT p FROM Product p WHERE p.dateAdded >= :date AND EXISTS (SELECT ps FROM ProductSize ps WHERE ps.product = p AND ps.stock > 0)")
     Page<Product> findProductsByDateAddedWithStock(@Param("date") LocalDate date, Pageable pageable);
     
+    //@Query("SELECT p FROM Product p WHERE (:gender IS NULL OR p.gender.name IN :genders) AND (:brand IS NULL OR p.brand.name IN :brands) AND EXISTS (SELECT ps FROM ProductSize ps WHERE ps.product = p AND ps.stock > 0)")
+    @Query("SELECT p FROM Product p WHERE (:gender IS NULL OR p.gender.name IN :gender) AND (:brand IS NULL OR p.brand.name IN :brand) AND EXISTS (SELECT ps FROM ProductSize ps WHERE ps.product = p AND ps.stock > 0)")
+    Page<Product> findProductsByGendersAndBrandsWithStock(@Param("gender") String gender, @Param("brand") String brand, Pageable pageable);
 }
