@@ -91,7 +91,7 @@ public class ProductController {
         return service.findProductsByDateAddedWithStock(localDate, pageable);
     }
 
-    @GetMapping("/filter-products")
+    @GetMapping("/all")
     public Page<Product> getProductsFiltered(@RequestParam(required = false) String gender,
                                              @RequestParam(required = false) String brand,
                                              @RequestParam(defaultValue = "0") Integer page) {
