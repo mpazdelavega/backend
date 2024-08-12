@@ -2,43 +2,21 @@ package com.example.backend.web.service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.lang.NonNull;
 
 import com.example.backend.web.model.User;
-import com.example.backend.web.repository.UserRepository;
 
-@Service
-public class UserService implements UserDetailsService{
+public interface UserService {
+    List<User> findAll();
 
-    @Autowired
-    private UserRepository userRepository;
+    Page<User> findAll(Pageable pageable);
 
-    @Transactional(readOnly = true)
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    Optional<User> findById(@NonNull Integer id);
 
-        Optional<User> optionalUser = userRepository.findByUsername(username);
+    User save(User user);
 
-        if(optionalUser.isEmpty()) {
-            throw new UsernameNotFoundException(String.format("Username %s no existe en el sistema", username));
-        }
-
-        User user = optionalUser.orElseThrow();
-
-        List<GrantedAuthority> authorities = user.getRoles().stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
-
-        return new org.springframework.security.core.userdetails.User(username, user.getPassword(), true, true, true, true, authorities);
-        
-    }
-
+    void deleteById(Integer id);
 }

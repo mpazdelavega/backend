@@ -3,6 +3,7 @@ package com.example.backend.web.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import io.micrometer.common.lang.NonNull;
 import jakarta.persistence.Entity;
@@ -37,6 +38,7 @@ public class User {
     @NonNull
     private String password;
 
+    @JsonIgnoreProperties({"handler", "hibernateLazyInitializer"})
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name = "users_roles",
