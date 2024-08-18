@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.lang.NonNull;
 
 import com.example.backend.web.model.User;
+import com.example.backend.web.model.UserRequest;
 
 public interface UserService {
     List<User> findAll();
@@ -17,6 +18,8 @@ public interface UserService {
     Optional<User> findById(@NonNull Integer id);
 
     User save(User user);
+
+    Optional<User> update(UserRequest user, Integer id);
 
     void deleteById(Integer id);
 }

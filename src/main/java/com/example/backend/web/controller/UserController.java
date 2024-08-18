@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.backend.web.model.User;
+import com.example.backend.web.model.UserRequest;
 import com.example.backend.web.service.UserService;
 
 import jakarta.validation.Valid;
@@ -63,27 +64,23 @@ public class UserController {
         if (result.hasErrors()) {
             return validation(result);
         }
-        System.out.println("Creating user: " + user); // Depuración
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.save(user));
+        service.save(user);
+        return ResponseEntity.status(HttpStatus.CREATED).body(user);
     }
 
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@Valid @RequestBody User user, BindingResult result, @PathVariable Integer id) {
+    public ResponseEntity<?> update(@Valid @RequestBody UserRequest user, BindingResult result, @PathVariable Integer id) {
 
         if (result.hasErrors()) {
             return validation(result);
         }
         
-        Optional<User> userOptional = service.findById(id);
+        Optional<User> userOptional = service.update(user, id);
 
         if (userOptional.isPresent()) {
-            User userDb = userOptional.get();
-            userDb.setEmail(user.getEmail());
-            userDb.setPassword(user.getPassword());
-            userDb.setUsername(user.getUsername());
-            return ResponseEntity.ok(service.save(userDb));
+            return ResponseEntity.ok(userOptional.orElseThrow());
         }
         return ResponseEntity.notFound().build();
     }

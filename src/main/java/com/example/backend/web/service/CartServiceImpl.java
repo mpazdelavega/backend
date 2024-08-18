@@ -8,8 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.backend.web.model.Cart;
 import com.example.backend.web.model.Product;
-import com.example.backend.web.model.Size;
 import com.example.backend.web.model.ProductSize;
+import com.example.backend.web.model.Size;
 import com.example.backend.web.repository.CartRepository;
 import com.example.backend.web.repository.ProductRepository;
 import com.example.backend.web.repository.ProductSizeRepository;
